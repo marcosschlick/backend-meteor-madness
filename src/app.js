@@ -1,10 +1,9 @@
 import express from "express";
+import { impactRoutes } from "./routes/impactRoutes.js";
 
 const app = express();
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send("Server running");
-});
+app.use("/impacts", impactRoutes);
 
 export default app;
