@@ -4,6 +4,6 @@ import ImpactController from "../controllers/ImpactController.js";
 
 const router = new Router();
 
-router.get("/", ImpactController.getImpact);
+router.post("/", ImpactController.getImpact);
 
 export { router as impactRoutes };

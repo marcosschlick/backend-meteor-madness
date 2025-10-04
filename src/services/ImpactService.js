@@ -2,12 +2,19 @@ export default class ImpactService {
   async getImpact(size, speed, lat, lon) {
     try {
       // Correção: adicionar const na destructuring
-      const { kineticEnergy } = calculateImpactEnergy(size, speed);
+      const { kineticEnergy, tntEquivalent } = calculateImpactEnergy(
+        size,
+        speed
+      );
 
       // Correção: declarar a variável raio
       const raio = estimateCraterDiameter(kineticEnergy) / 2;
 
-      return raio;
+      return {
+        kineticEnergy,
+        tntEquivalent,
+        craterRadius: raio,
+      };
     } catch (error) {
       console.error(error);
       throw error;
@@ -30,11 +37,11 @@ function calculateImpactEnergy(diameter, velocity, density = 3000) {
   const tntEquivalent = kineticEnergy / TNT_ENERGY_JOULE;
 
   return {
-    // diameter: diameter,
-    // // velocity: velocity,
-    // // density: density,
+    diameter: diameter,
+    velocity: velocity,
+    density: density,
     kineticEnergy: kineticEnergy,
-    // ,tntEquivalent: tntEquivalent,
+    tntEquivalent: tntEquivalent,
   };
 }
 
