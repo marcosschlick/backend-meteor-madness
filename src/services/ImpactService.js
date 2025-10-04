@@ -1,10 +1,10 @@
 export default class ImpactService {
-  async getImpact(size, speed, lat, lon) {
+  async getImpact(diameter, velocity, lat, lon) {
     try {
       // Correção: adicionar const na destructuring
       const { kineticEnergy, tntEquivalent } = calculateImpactEnergy(
-        size,
-        speed
+        diameter,
+        velocity
       );
 
       // Correção: declarar a variável raio
@@ -12,7 +12,7 @@ export default class ImpactService {
 
       return {
         kineticEnergy,
-        tntEquivalent,
+        tnt: tntEquivalent,
         craterRadius: raio,
       };
     } catch (error) {

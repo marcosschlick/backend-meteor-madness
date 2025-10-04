@@ -6,8 +6,8 @@ export default class ImpactController {
       const impactService = new ImpactService();
 
       const impact = await impactService.getImpact(
-        req.body.size,
-        req.body.speed,
+        req.body.diameter,
+        req.body.velocity,
         req.body.lat,
         req.body.lon
       );
