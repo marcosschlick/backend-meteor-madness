@@ -1,15 +1,9 @@
 // Funções principais do simulador
 document.addEventListener("DOMContentLoaded", function () {
-  // Configurar controles deslizantes
   setupSliders();
-
-  // Configurar abas
   setupTabs();
-
-  // Configurar botão de simulação
   setupSimulationButton();
-
-  // Inicializar simulação 3D
+  setupRealAsteroids();
   initThreeDScene();
 });
 
@@ -60,6 +54,47 @@ function setupSimulationButton() {
 
     // Executar simulação 3D (mantém na aba 3D)
     simulate3D(size, velocity, lat, lon);
+  });
+}
+
+function setupRealAsteroids() {
+  const asteroidSelect = document.getElementById("real-asteroids");
+
+  // Carregar asteroides reais
+  fetch("/asteroids")
+    .then((res) => res.json())
+    .then((asteroids) => {
+      asteroidSelect.innerHTML =
+        '<option value="">-- Choose an asteroid --</option>';
+
+      asteroids.forEach((asteroid) => {
+        const option = document.createElement("option");
+        option.value = asteroid.id;
+        option.textContent = `${asteroid.name} (${Math.round(asteroid.diameter)}m, ${Math.round(asteroid.velocity / 1000)}km/s)`;
+        option.dataset.diameter = asteroid.diameter;
+        option.dataset.velocity = asteroid.velocity;
+        asteroidSelect.appendChild(option);
+      });
+    })
+    .catch((err) => console.error("Error loading asteroids:", err));
+
+  // Quando selecionar um asteroide
+  asteroidSelect.addEventListener("change", function () {
+    if (this.value) {
+      const selectedOption = this.options[this.selectedIndex];
+      const diameter = selectedOption.dataset.diameter;
+      const velocity = selectedOption.dataset.velocity / 1000; // Converter para km/s
+
+      // Atualizar controles
+      document.getElementById("asteroid-size").value = diameter;
+      document.getElementById("asteroid-velocity").value = velocity;
+
+      // Atualizar displays
+      document.getElementById("size-value").textContent =
+        `${Math.round(diameter)} m`;
+      document.getElementById("velocity-value").textContent =
+        `${velocity} km/s`;
+    }
   });
 }
 
