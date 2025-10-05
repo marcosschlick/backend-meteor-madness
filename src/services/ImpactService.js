@@ -80,10 +80,7 @@ export default class ImpactService {
       return Math.round(
         affectedPopulation * this.getLethalityFactor(tntEquivalent)
       );
-    } catch (error) {
-      console.error("Erro ao estimar mortes:", error);
-      return 0;
-    }
+    } catch (error) {}
   }
 
   // Estimate population density based on location type

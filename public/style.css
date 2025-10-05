@@ -73,12 +73,6 @@ body {
   margin-bottom: 1.5rem; /* Reduzido de 3rem */
 }
 
-.simulation-section h2 {
-  margin-bottom: 2rem;
-  color: var(--primary-color);
-  text-align: center;
-}
-
 .simulation-container {
   display: grid;
   grid-template-columns: 1fr 2fr;
