@@ -6,6 +6,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use("/impacts", impactRoutes);
+app.use("/", impactRoutes);
 
 export default app;
