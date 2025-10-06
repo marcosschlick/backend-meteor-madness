@@ -1,76 +1,83 @@
 # Asteroid Impact Simulator
 
-Um simulador de impacto de asteroides desenvolvido para o NASA Challenge, combinando visualização 3D interativa com cálculos científicos de impacto.
+An asteroid impact simulator developed for the NASA Challenge, combining interactive 3D visualization with scientific impact calculations.
 
-## 🚀 Como Executar o Projeto
+## 🚀 How to Run the Project
 
-### 1. Clonar o Repositório
+### 1. Clone the Repository
+
 ```bash
 git clone https://github.com/marcosschlick/meteor-madness.git
 cd meteor-madness
 ```
 
-### 2. Instalar Dependências
+### 2. Install Dependencies
+
 ```bash
 npm install
 ```
 
-### 3. Configurar Variáveis de Ambiente
+### 3. Configure Environment Variables
+
 ```bash
-# Copiar o arquivo de exemplo
+# Copy the example file
 cp .env.example .env
 
-# Editar o arquivo .env com suas configurações
-# (Altere "your_api_key_here" pela sua chave da NASA)
+# Edit the .env file with your configurations
+# (Replace "your_api_key_here" with your actual NASA API key)
 ```
 
-**Arquivo .env:**
+**.env file:**
+
 ```env
 SV_PORT=3000
 NASA_API_KEY=your_api_key_here
 ```
 
-### 4. Executar o Projeto
+### 4. Run the Project
+
 ```bash
-# Modo desenvolvimento (com auto-reload)
+# Development mode (with auto-reload)
 npm run dev
 
-# Ou modo produção
+# Or production mode
 npm start
 ```
 
-### 5. Acessar a Aplicação
-Abra seu navegador e acesse:
+### 5. Access the Application
+
+Open your browser and navigate to:
+
 ```
 http://localhost:3000
 ```
 
-## 🔑 Obter Chave da NASA API
+## 🔑 Get NASA API Key
 
-1. Acesse: https://api.nasa.gov/
-2. Clique em "Sign Up" para criar uma conta
-3. Preencha o formulário rapidamente
-4. Você receberá uma chave API por email
-5. Cole a chave no arquivo `.env` em `NASA_API_KEY=sua_chave_aqui`
+1. Visit: https://api.nasa.gov/
+2. Click "Sign Up" to create an account
+3. Quickly fill out the form
+4. You'll receive an API key via email
+5. Paste the key in the `.env` file at `NASA_API_KEY=your_key_here`
 
-*Caso não configure, será usada a DEMO_KEY da NASA (com limitações de uso).*
+_If not configured, NASA's DEMO_KEY will be used (with usage limitations)._
 
-## 🛠 Tecnologias Utilizadas
+## 🛠 Technologies Used
 
 - **Backend**: Node.js, Express.js
 - **Frontend**: HTML5, CSS3, JavaScript
-- **Visualização 3D**: Three.js
-- **Cálculos Científicos**: Decimal.js
-- **API Externa**: NASA NeoWS
+- **3D Visualization**: Three.js
+- **Scientific Calculations**: Decimal.js
+- **External API**: NASA NeoWS
 
-## 📋 Funcionalidades
+## 📋 Features
 
-- Simulação 3D interativa de impacto de asteroides
-- Cálculos científicos de energia cinética, cratera e efeitos
-- Seleção de local de impacto clicando no globo terrestre
-- Visualização de resultados detalhados
-- Integração com dados reais de asteroides da NASA
+- Interactive 3D simulation of asteroid impacts
+- Scientific calculations of kinetic energy, crater size, and effects
+- Impact location selection by clicking on the globe
+- Detailed results visualization
+- Integration with real asteroid data from NASA
 
 ---
 
-**Desenvolvido para o NASA Challenge 2025** 🚀
+**Developed for NASA Challenge 2025**

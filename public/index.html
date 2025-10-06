@@ -1,191 +1,161 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Asteroid Impact Simulator</title>
-    <link rel="stylesheet" href="./style.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Asteroid Impact Simulator</title>
+  <link rel="stylesheet" href="./style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
-  <body>
-    <header class="header">
-      <div class="container">
-        <div class="logo">
-          <img src="./images/nasalogo.png" alt="NASA" class="nasa-logo" />
-          <h1>Asteroid Impact Simulator</h1>
-        </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+</head>
+
+<body>
+  <header class="header">
+    <div class="container">
+      <div class="logo">
+        <img src="./images/nasalogo.png" alt="NASA" class="nasa-logo" />
+        <h1>Asteroid Impact Simulator</h1>
       </div>
-    </header>
+    </div>
+  </header>
 
-    <main class="main-content">
-      <section id="simulacao" class="simulation-section">
-        <div class="container">
-          <div class="simulation-container">
-            <div class="control-panel">
-              <h3>Asteroid Parameters</h3>
+  <main class="main-content">
+    <section id="simulacao" class="simulation-section">
+      <div class="container">
+        <div class="simulation-container">
+          <div class="control-panel">
+            <h3>Asteroid Parameters</h3>
 
-              <div class="parameter-group">
-                <label for="asteroid-size">Size (diameter in meters)</label>
-                <input
-                  type="range"
-                  id="asteroid-size"
-                  min="10"
-                  max="1000"
-                  value="100"
-                />
-                <span id="size-value">100 m</span>
-              </div>
-
-              <div class="parameter-group">
-                <label for="asteroid-velocity">Velocity (km/s)</label>
-                <input
-                  type="range"
-                  id="asteroid-velocity"
-                  min="5"
-                  max="30"
-                  value="17"
-                />
-                <span id="velocity-value">17 km/s</span>
-              </div>
-
-              <div class="parameter-group">
-                <label for="real-asteroids">Or Select Real Asteroid</label>
-                <select id="real-asteroids">
-                  <option value="">-- Choose an asteroid --</option>
-                </select>
-              </div>
-
-              <div class="parameter-group">
-                <label for="latitude">Latitude</label>
-                <input type="number" id="latitude" step="any" />
-              </div>
-
-              <div class="parameter-group">
-                <label for="longitude">Longitude</label>
-                <input type="number" id="longitude" step="any" />
-              </div>
-
-              <button id="run-simulation" class="simulate-button">
-                Run Simulation
-              </button>
+            <div class="parameter-group">
+              <label for="asteroid-size">Size (diameter in meters)</label>
+              <input type="range" id="asteroid-size" min="10" max="1000" value="100" />
+              <span id="size-value">100 m</span>
             </div>
 
-            <!-- Área de visualização -->
-            <div class="visualization-area">
-              <div class="visualization-tabs">
-                <button class="tab-button active" data-tab="threeD">3D</button>
-                <button class="tab-button" data-tab="results">Results</button>
+            <div class="parameter-group">
+              <label for="asteroid-velocity">Velocity (km/s)</label>
+              <input type="range" id="asteroid-velocity" min="5" max="30" value="17" />
+              <span id="velocity-value">17 km/s</span>
+            </div>
+
+            <div class="parameter-group">
+              <label for="real-asteroids">Or Select Real Asteroid</label>
+              <select id="real-asteroids" class="asteroid-select">
+                <option value="">-- Choose an asteroid --</option>
+              </select>
+            </div>
+
+            <div class="parameter-group">
+              <label for="latitude">Latitude</label>
+              <input type="number" id="latitude" step="any" />
+            </div>
+
+            <div class="parameter-group">
+              <label for="longitude">Longitude</label>
+              <input type="number" id="longitude" step="any" />
+            </div>
+
+            <button id="run-simulation" class="simulate-button">
+              Run Simulation
+            </button>
+          </div>
+
+          <div class="visualization-area">
+            <div class="visualization-tabs">
+              <button class="tab-button active" data-tab="threeD">3D</button>
+              <button class="tab-button" data-tab="results">Results</button>
+            </div>
+
+            <div class="visualization-container">
+              <div id="threeD-visualization" class="tab-content active">
+                <div id="threeD-container">
+                  <canvas id="scene"></canvas>
+                </div>
               </div>
 
-              <div class="visualization-container">
-                <div id="threeD-visualization" class="tab-content active">
-                  <div id="threeD-container">
-                    <canvas id="scene"></canvas>
-                  </div>
-                </div>
-
-                <div id="results-visualization" class="tab-content">
-                  <div class="results-container">
-                    <h3>Impact Analysis Results</h3>
-                    <div class="results-grid">
-                      <div class="result-card">
-                        <div class="result-icon">
-                          <i class="fas fa-bomb"></i>
-                        </div>
-                        <div class="result-content">
-                          <h4>Kinetic Energy</h4>
-                          <div class="result-value" id="kinetic-energy">-</div>
-                          <div class="result-unit">Joules</div>
-                        </div>
+              <div id="results-visualization" class="tab-content">
+                <div class="results-container">
+                  <h3>Impact Analysis Results</h3>
+                  <div class="results-grid">
+                    <div class="result-card">
+                      <div class="result-icon">
+                        <i class="fas fa-bomb"></i>
                       </div>
-
-                      <div class="result-card">
-                        <div class="result-icon">
-                          <i class="fas fa-fire"></i>
-                        </div>
-                        <div class="result-content">
-                          <h4>TNT Equivalent</h4>
-                          <div class="result-value" id="tnt-equivalent">-</div>
-                          <div class="result-unit">Tons of TNT</div>
-                        </div>
+                      <div class="result-content">
+                        <h4>Kinetic Energy</h4>
+                        <div class="result-value" id="kinetic-energy">-</div>
+                        <div class="result-unit">Joules</div>
                       </div>
+                    </div>
 
-                      <div class="result-card">
-                        <div class="result-icon">
-                          <i class="fas fa-mountain"></i>
-                        </div>
-                        <div class="result-content">
-                          <h4>Crater Radius</h4>
-                          <div class="result-value" id="crater-radius">-</div>
-                          <div class="result-unit">Meters</div>
-                        </div>
+                    <div class="result-card">
+                      <div class="result-icon">
+                        <i class="fas fa-fire"></i>
                       </div>
-
-                      <div class="result-card">
-                        <div class="result-icon">
-                          <i class="fas fa-earthquake"></i>
-                        </div>
-                        <div class="result-content">
-                          <h4>Seismic Magnitude</h4>
-                          <div class="result-value" id="seismic-magnitude">
-                            -
-                          </div>
-                          <div class="result-unit">Richter Scale</div>
-                        </div>
+                      <div class="result-content">
+                        <h4>TNT Equivalent</h4>
+                        <div class="result-value" id="tnt-equivalent">-</div>
+                        <div class="result-unit">Tons of TNT</div>
                       </div>
+                    </div>
 
-                      <div class="result-card">
-                        <div class="result-icon">
-                          <i class="fas fa-explosion"></i>
-                        </div>
-                        <div class="result-content">
-                          <h4>Blast Radius</h4>
-                          <div class="result-value" id="blast-radius">-</div>
-                          <div class="result-unit">Meters</div>
-                        </div>
+                    <div class="result-card">
+                      <div class="result-icon">
+                        <i class="fas fa-mountain"></i>
                       </div>
-
-                      <div class="result-card risk-card">
-                        <div class="result-icon">
-                          <i class="fas fa-exclamation-triangle"></i>
-                        </div>
-                        <div class="result-content">
-                          <h4>Risk Level</h4>
-                          <div class="result-value" id="risk-level">-</div>
-                          <div class="result-description" id="risk-description">
-                            Impact severity assessment
-                          </div>
-                        </div>
+                      <div class="result-content">
+                        <h4>Crater Radius</h4>
+                        <div class="result-value" id="crater-radius">-</div>
+                        <div class="result-unit">Meters</div>
                       </div>
+                    </div>
 
-                      <div class="result-card">
-                        <div class="result-icon">
-                          <i class="fas fa-map-marked-alt"></i>
-                        </div>
-                        <div class="result-content">
-                          <h4>Affected Area</h4>
-                          <div class="result-value" id="affected-area">-</div>
-                          <div class="result-unit">Square Meters</div>
-                        </div>
+                    <div class="result-card">
+                      <div class="result-icon">
+                        <i class="fas fa-earthquake"></i>
                       </div>
-
-                      <div class="result-card">
-                        <div class="result-icon">
-                          <i class="fas fa-skull-crossbones"></i>
+                      <div class="result-content">
+                        <h4>Seismic Magnitude</h4>
+                        <div class="result-value" id="seismic-magnitude">
+                          -
                         </div>
-                        <div class="result-content">
-                          <h4>Estimated Deaths</h4>
-                          <div class="result-value" id="estimated-deaths">
-                            -
-                          </div>
-                          <div class="result-unit">People</div>
+                        <div class="result-unit">Richter Scale</div>
+                      </div>
+                    </div>
+
+                    <div class="result-card">
+                      <div class="result-icon">
+                        <i class="fas fa-explosion"></i>
+                      </div>
+                      <div class="result-content">
+                        <h4>Blast Radius</h4>
+                        <div class="result-value" id="blast-radius">-</div>
+                        <div class="result-unit">Meters</div>
+                      </div>
+                    </div>
+                    <div class="result-card">
+                      <div class="result-icon">
+                        <i class="fas fa-map-marked-alt"></i>
+                      </div>
+                      <div class="result-content">
+                        <h4>Affected Area</h4>
+                        <div class="result-value" id="affected-area">-</div>
+                        <div class="result-unit">Square Meters</div>
+                      </div>
+                    </div>
+
+                    <div class="result-card risk-card">
+                      <div class="result-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                      </div>
+                      <div class="result-content">
+                        <h4>Risk Level</h4>
+                        <div class="result-value" id="risk-level">-</div>
+                        <div class="result-description" id="risk-description">
+                          Impact severity assessment
                         </div>
                       </div>
                     </div>
@@ -195,19 +165,19 @@
             </div>
           </div>
         </div>
-      </section>
-    </main>
-
-    <!-- Rodapé -->
-    <footer class="footer">
-      <div class="container">
-        <div class="footer-bottom">
-          <p>2025 NASA Space Apps Challenge</p>
-        </div>
       </div>
-    </footer>
+    </section>
+  </main>
 
-    <!-- Scripts JavaScript -->
-    <script src="./script.js"></script>
-  </body>
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <p>2025 NASA Space Apps Challenge</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./script.js"></script>
+</body>
+
 </html>
