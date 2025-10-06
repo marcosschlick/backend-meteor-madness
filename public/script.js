@@ -212,7 +212,8 @@ function simulate3D(size, velocity, lat, lon) {
   }
 
   // Criar novo asteroide
-  const asteroidGeo = new THREE.SphereGeometry(size / 50, 16, 16);
+  const asteroidSize = Math.max(size / 1000, 0.1); // Divide por 1000 para melhor proporção
+  const asteroidGeo = new THREE.SphereGeometry(asteroidSize, 16, 16);
   const asteroidMat = new THREE.MeshPhongMaterial({ color: 0x888888 });
   asteroid = new THREE.Mesh(asteroidGeo, asteroidMat);
 
